@@ -1,5 +1,6 @@
 import {db} from "../db.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export const register = (req, res)=>{
     // console.log(req.body);
@@ -40,7 +41,31 @@ export const register = (req, res)=>{
 }
 
 export const login = (req, res)=>{
+    console.log(req.body);
+    if(!req.body.username || !req.body.password){
+        return res.status(400).json("All fields are required");
+    }
+    // Check User
+    const q = "SELECT * FROM users WHERE username=?"
+    db.query(q, [req.body.username], (err, data)=>{
+        if(err){
+            return res.status(500).json(err);
+        }
+        if(data.length===0){
+            return res.status(404).json("User not found");
+        }
+        const isCorrectPassword = bcrypt.compareSync(req.body.password, data[0].password);
+        if(!isCorrectPassword){
+            return res.status(400).json("Invalid Credentials");
+        }
+        const token = jwt.sign({id: data[0].id}, "jwtkey");
+        const {password, ...other} = data[0];
 
+        res.cookie("access_token", token, {
+            httpOnly: true
+        }).status(200).json(other);
+
+    })
 }
 
 export const logout = (req, res)=>{
