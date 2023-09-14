@@ -39,11 +39,15 @@ export default function Single() {
     }
   }
 
+  const getText = (html) =>{
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent;
+  }
 
   return (
     <div className="single">
       <div className="content">
-        <img src={post?.img} alt="img not found" />
+        <img src={`../upload/${post?.img}`} alt="img not found" />
         <div className="user">
           {post.userImg && <img src={post.userImg} alt="img not found" />}
           <div className="info">
@@ -52,7 +56,7 @@ export default function Single() {
           </div>
           {currentUser && currentUser.username === post.username && 
             (<div className="edit">
-              <Link to="/write?edit=2">
+              <Link to="/write?edit=2" state={post} >
                 <img src={Edit} alt="img not found" />
               </Link>
               <Link>
@@ -62,9 +66,9 @@ export default function Single() {
           }
         </div>
         <h1>{post.title}</h1>
-          {post.desc}
+          { getText(post.desc)}
       </div>
-      <Menu/>
+      <Menu cat={post.cat}/>
     </div>
   )
 }
