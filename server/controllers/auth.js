@@ -41,7 +41,7 @@ export const register = (req, res)=>{
 }
 
 export const login = (req, res)=>{
-    console.log(req.body);
+    // console.log(req.body);
     if(!req.body.username || !req.body.password){
         return res.status(400).json("All fields are required");
     }
@@ -69,5 +69,8 @@ export const login = (req, res)=>{
 }
 
 export const logout = (req, res)=>{
-
+    res.clearCookie("access_token", {
+        sameSite: "none",
+        secure: true
+    }).status(200).json("User has been logged out");
 }
