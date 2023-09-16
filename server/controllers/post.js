@@ -1,5 +1,7 @@
 import {db} from "../db.js";
 import jwt from "jsonwebtoken";
+import path from "path";
+import fs from "fs"
 
 export const getPosts = (req, res)=>{
     const q = req.query.cat ? "SELECT * FROM post WHERE cat=?" : "SELECT * FROM post";
@@ -39,7 +41,7 @@ export const addPost = (req, res)=>{
         const values = [
             req.body.title,
             req.body.desc,
-            req.body.img,
+            req.file.filename,
             req.body.cat,
             req.body.date,
             userInfo.id
@@ -65,8 +67,19 @@ export const deletePost = (req, res)=>{
         }
 
         const postId = req.params.id;
-        const q = "DELETE FROM post WHERE `id` = ? AND `uid` = ?";
+        const imgQeury = "SELECT `img` FROM post WHERE `id`= ? AND `uid` = ?";
+        db.query(imgQeury, [postId, userInfo.id], (err, data)=>{
+            if(err){
+                return res.status(500).json("Some internal error occured");
+            }
+            const image = data[0].img;
+            // console.log(image);
+            const imagePath = path.join("public/upload", image);
+            // console.log(imagePath);
+            fs.unlinkSync(imagePath);
+        })
 
+        const q = "DELETE FROM post WHERE `id` = ? AND `uid` = ?";
         db.query(q, [postId, userInfo.id], (err, data)=>{
             if(err){
                 return res.status(403).json("You can delete only your posts!");
@@ -92,7 +105,7 @@ export const updatePost = (req, res)=>{
         const values = [
             req.body.title,
             req.body.desc,
-            req.body.img,
+            req.file.filename,
             req.body.cat,
         ]
         db.query(q, [...values, postId, userInfo.id], (err, data)=>{

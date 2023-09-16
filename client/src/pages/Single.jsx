@@ -47,7 +47,8 @@ export default function Single() {
   return (
     <div className="single">
       <div className="content">
-        <img src={`../upload/${post?.img}`} alt="img not found" />
+        {/* {console.log(post.img)} */}
+        <img src={post.img && `http://localhost:8800/${post.img}`} alt="img not found" />
         <div className="user">
           {post.userImg && <img src={post.userImg} alt="img not found" />}
           <div className="info">

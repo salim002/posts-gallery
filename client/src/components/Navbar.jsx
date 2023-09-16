@@ -1,5 +1,4 @@
 import React, {useContext} from "react";
-import Logo from "../img/logo.png";
 
 import {AuthContext} from "../context/authContext";
 
@@ -12,8 +11,8 @@ const Navbar = () => {
     <div className="navbar">
       <div className="container">
         <div className="logo">
-          <Link to="/">
-            <img src={Logo} alt="logo img not found" />
+          <Link to="/" className="brand">
+            <span>Posts Gallery</span>
           </Link>
         </div>
         <div className="links">

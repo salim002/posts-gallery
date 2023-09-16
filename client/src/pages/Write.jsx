@@ -16,24 +16,31 @@ const Write = () => {
   const [file, setFile] = useState(null);
   const [cat, setCat] = useState(state?.cat || "");
 
-  const upload = async ()=>{
-    try{
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await axios.post("/upload", formData);
-      // console.log(res.data);
-      return res.data;
-    } catch(error){
-      console.log(error);
-    }
-  }
+  // const upload = async ()=>{
+  //   try{
+  //     const formData = new FormData();
+  //     formData.append("file", file);
+  //     const res = await axios.post("/upload", formData);
+  //     // console.log(res.data);
+  //     return res.data;
+  //   } catch(error){
+  //     console.log(error);
+  //   }
+  // }
 
   const handleClick = async (e)=>{
     e.preventDefault();
-    const imgUrl = await upload();
+    const formdata = new FormData();
+    formdata.append("title", title);
+    formdata.append("desc", value);
+    formdata.append("cat", cat);
+    formdata.append("file", file);
+    if(!state){
+      formdata.append("date", moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"));
+    }
     try{
-      state ? await axios.put(`posts/${state.id}`, {title, desc:value, cat, img:file?imgUrl:""})
-       : await axios.post(`posts/`, {title, desc:value, cat, img:file?imgUrl:"", date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")})
+      state ? await axios.put(`posts/${state.id}`, formdata)
+       : await axios.post(`posts/`, formdata)
       navigate("/");
     } catch(error){
       console.log(error);
