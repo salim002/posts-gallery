@@ -77,7 +77,16 @@ export const deletePost = (req, res)=>{
             // console.log(image);
             const imagePath = path.join("public/upload", image);
             // console.log(imagePath);
-            fs.unlinkSync(imagePath);
+            try{
+                fs.unlinkSync(imagePath);
+            } catch(error){
+                if(error.code === "ENOENT"){
+                    console.log(`File ${imagePath} doesn't exist`);
+                }
+                else{
+                    console.log(error);
+                }
+            }
         })
 
         const q = "DELETE FROM post WHERE `id` = ? AND `uid` = ?";
