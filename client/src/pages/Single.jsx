@@ -50,7 +50,7 @@ export default function Single() {
         {/* {console.log(post.img)} */}
         <img src={post.img && `http://localhost:8800/${post.img}`} alt="img not found" />
         <div className="user">
-          {post.userImg && <img src={post.userImg} alt="img not found" />}
+          {/* {post.userImg && <img src={post.userImg} alt="img not found" />} */}
           <div className="info">
             <span>{post.username}</span>
             <p>Posted {moment(post.date).fromNow()}</p>

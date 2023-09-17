@@ -50,7 +50,11 @@ export default function Home() {
 
   const getText = (html) =>{
     const doc = new DOMParser().parseFromString(html, "text/html");
-    return doc.body.textContent;
+    const str = doc.body.textContent;
+    if(str.length<=130){
+      return str;
+    }
+    return str.slice(0, 120)+"...";
   }
 
   return (

@@ -1,4 +1,4 @@
-import {db} from "../db.js";
+import {db} from "../config/db.js";
 import jwt from "jsonwebtoken";
 import path from "path";
 import fs from "fs"
@@ -15,8 +15,9 @@ export const getPosts = (req, res)=>{
 }
 
 export const getPost = (req, res) => {
+    // console.log(req.params);
     const q =
-      "SELECT p.id, `username`, `title`, `desc`, p.img, u.img AS userImg, `cat`,`date` FROM users u JOIN post p ON u.id = p.uid WHERE p.id = ? ";
+      "SELECT p.id, `username`, `title`, `desc`, p.img, `cat`,`date` FROM users u JOIN post p ON u.id = p.uid WHERE p.id = ? ";
   
     db.query(q, [req.params.id], (err, data) => {
       if (err) return res.status(500).json(err);
