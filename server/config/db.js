@@ -1,16 +1,15 @@
 import mysql from "mysql";
 
-export const db = mysql.createConnection({
+const pool = mysql.createPool({
   host: "sql12.freesqldatabase.com",
   user: "sql12646981",
   password: "Ye8CMwYKx2",
-  database: "sql12646981"
+  database: "sql12646981",
+  connectionLimit: 10, 
 });
 
-db.connect((err) => {
-  if(err){
-    console.error("Error connecting to the database:", err);
-    return;
-  }
-  console.log("Database connected successfully!");
+export const db = pool;
+
+pool.on("error", (err) => {
+  console.error("Database pool error:", err);
 });
