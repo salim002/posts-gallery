@@ -21,7 +21,7 @@ export default function Single() {
   useEffect(()=>{
     const fetchData = async ()=>{
       try{
-        const res = await axios.get(`/posts/${postId}`)
+        const res = await axios.get(`http://localhost:8800/api/posts/${postId}`)
         setPost(res.data);
       } catch(error){
         console.log(error);
@@ -32,7 +32,11 @@ export default function Single() {
 
   const handleDelete = async ()=>{
     try{
-      await axios.delete(`/posts/${postId}`)
+      await axios.delete(`http://localhost:8800/api/posts/${postId}`, {
+          headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+      })
       navigate("/");
     } catch(error){
       console.log(error);

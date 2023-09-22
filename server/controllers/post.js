@@ -28,7 +28,9 @@ export const getPost = (req, res) => {
 
 export const addPost = (req, res)=>{
     // console.log(req.body);
-    const token = req.cookies.access_token;
+    const {authorization} = req.headers;
+    const token = authorization.split(" ")[1];
+    // console.log(token);
     if(!token){
         return res.status(401).json("Not Authenticated")
     }
@@ -57,7 +59,9 @@ export const addPost = (req, res)=>{
 }
 
 export const deletePost = (req, res)=>{
-    const token = req.cookies.access_token;
+    const {authorization} = req.headers;
+    const token = authorization.split(" ")[1];
+    // console.log(token);
     if(!token){
         return res.status(401).json("Not Authenticated")
     }
@@ -73,6 +77,9 @@ export const deletePost = (req, res)=>{
             if(err){
                 return res.status(500).json("Some internal error occured");
             }
+            if(data.length==0){
+                console.log("Image not found");
+            }
             const image = data[0].img;
             // console.log(image);
             const imagePath = path.join("public/upload", image);
@@ -87,21 +94,21 @@ export const deletePost = (req, res)=>{
                     console.log(error);
                 }
             }
-        })
-
-        const q = "DELETE FROM post WHERE `id` = ? AND `uid` = ?";
-        db.query(q, [postId, userInfo.id], (err, data)=>{
-            if(err){
-                return res.status(403).json("You can delete only your posts!");
-            }
-            return res.status(200).json("Post has been deleted successfully!");
+            const q = "DELETE FROM post WHERE `id` = ? AND `uid` = ?";
+            db.query(q, [postId, userInfo.id], (err, data)=>{
+                if(err){
+                    return res.status(403).json("You can delete only your posts!");
+                }
+                return res.status(200).json("Post has been deleted successfully!");
+            })
         })
     })
 }
 
 export const updatePost = (req, res)=>{
     // console.log(req.body);
-    const token = req.cookies.access_token;
+    const {authorization} = req.headers;
+    const token = authorization.split(" ")[1];
     if(!token){
         return res.status(401).json("Not Authenticated")
     }
@@ -126,3 +133,62 @@ export const updatePost = (req, res)=>{
         })
     })
 }
+
+// function queryAsync(sql, values) {
+//     return new Promise((resolve, reject) => {
+//       db.query(sql, values, (err, data) => {
+//         if (err) {
+//           reject(err);
+//         } else {
+//           resolve(data);
+//         }
+//       });
+//     });
+//   }
+
+// export const deletePost = async (req, res) => {
+//     try {
+//       const { authorization } = req.headers;
+//       const token = authorization.split(" ")[1];
+  
+//       if (!token) {
+//         return res.status(401).json("Not Authenticated");
+//       }
+  
+//       const userInfo = jwt.verify(token, "jwtkey");
+  
+//       const postId = req.params.id;
+//       const imgQuery = "SELECT `img` FROM post WHERE `id`= ? AND `uid` = ?";
+      
+//       const [imgData] = await queryAsync(imgQuery, [postId, userInfo.id]);
+  
+//       if (!imgData) {
+//         return res.status(404).json("Image not found");
+//       }
+  
+//       const image = imgData.img;
+//       const imagePath = path.join("public/upload", image);
+  
+//       try {
+//         fs.unlinkSync(imagePath);
+//       } catch (error) {
+//         if (error.code === "ENOENT") {
+//           console.log(`File ${imagePath} doesn't exist`);
+//         } else {
+//           console.log(error);
+//         }
+//       }
+  
+//       const deleteQuery = "DELETE FROM post WHERE `id` = ? AND `uid` = ?";
+//       const result = await queryAsync(deleteQuery, [postId, userInfo.id]);
+  
+//       if (result.affectedRows === 0) {
+//         return res.status(403).json("You can delete only your posts!");
+//       }
+  
+//       return res.status(200).json("Post has been deleted successfully!");
+//     } catch (error) {
+//       console.error("Error in deletePost:", error);
+//       return res.status(500).json(error.message);
+//     }
+//   };

@@ -12,7 +12,7 @@ export default function Home() {
   useEffect(()=>{
     const fetchData = async ()=>{
       try{
-        const res = await axios.get(`/posts${cat}`)
+        const res = await axios.get(`http://localhost:8800/api/posts${cat}`)
         setPosts(res.data);
       } catch(error){
         console.log(error);
