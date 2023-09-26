@@ -117,6 +117,9 @@ $lightGreen: #b9e7e7;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: fixed;
+            width: 65%;
+            bottom: 0;
             img{
                 height: 50px;
             }

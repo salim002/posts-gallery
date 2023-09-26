@@ -1,10 +1,10 @@
 import mysql from "mysql";
 
 const pool = mysql.createPool({
-  host: "sql12.freesqldatabase.com",
-  user: "sql12646981",
-  password: "Ye8CMwYKx2",
-  database: "sql12646981",
+  host: "db4free.net",
+  user: "mdsalim",
+  password: "Mysql@9876",
+  database: "mdsalimmysqldb",
   connectionLimit: 10, 
 });
 

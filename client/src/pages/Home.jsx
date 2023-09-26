@@ -4,6 +4,7 @@ import axios from "axios";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
+  const [flag, setFlag] = useState(false);
 
   const location = useLocation();
   const cat = location.search;
@@ -14,6 +15,7 @@ export default function Home() {
       try{
         const res = await axios.get(`http://localhost:8800/api/posts${cat}`)
         setPosts(res.data);
+        res.data.length===0 ? setFlag(true) : setFlag(false);
       } catch(error){
         console.log(error);
       }
@@ -60,6 +62,8 @@ export default function Home() {
   return (
     <div className="home">
       <div className="posts">
+      {!flag && posts.length===0 && <div style={{margin: "0 auto", fontSize: "40px"}} >Loading data from server... Please Wait.</div>}
+      {flag && <div style={{margin: "0 auto", fontSize: "40px"}} >No Posts Found :(</div>}
         {posts.map((post) => (
           <div className="post" key={post.id}>
             <div className="img">
