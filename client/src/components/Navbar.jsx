@@ -16,6 +16,9 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="links">
+          <Link className="link" to="/">
+            <h6>ALL</h6>
+          </Link>
           <Link className="link" to="/?cat=art">
             <h6>ART</h6>
           </Link>

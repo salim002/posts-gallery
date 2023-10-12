@@ -62,8 +62,8 @@ export default function Home() {
   return (
     <div className="home">
       <div className="posts">
-      {!flag && posts.length===0 && <div style={{margin: "0 auto", fontSize: "40px"}} >Loading data from server... Please Wait.</div>}
-      {flag && <div style={{margin: "0 auto", fontSize: "40px"}} >No Posts Found :(</div>}
+      {!flag && posts.length===0 && <div style={{margin: "0 auto", fontSize: "40px", height: "400px"}} >Loading data from server... Please Wait.</div>}
+      {flag && <div style={{margin: "0 auto", fontSize: "40px", height: "400px"}} >No Posts Found :(</div>}
         {posts.map((post) => (
           <div className="post" key={post.id}>
             <div className="img">
@@ -80,6 +80,7 @@ export default function Home() {
             </div>
           </div>
         ))}
+        {posts.length===1 && <div style={{height: "5px"}}></div>}
       </div>
     </div>
   );
