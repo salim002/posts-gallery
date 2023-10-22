@@ -10,7 +10,7 @@ export const AuthContexProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
 
   const login = async (inputs) => {
-    const res = await axios.post("http://localhost:8800/api/auth/login", inputs);
+    const res = await axios.post("https://posts-gallery-mdsalim.onrender.com/api/auth/login", inputs);
     // console.log(res.data);
     // console.log(res.data.token);
     // console.log(res.data.other);

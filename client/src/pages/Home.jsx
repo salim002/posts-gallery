@@ -13,7 +13,7 @@ export default function Home() {
   useEffect(()=>{
     const fetchData = async ()=>{
       try{
-        const res = await axios.get(`http://localhost:8800/api/posts${cat}`)
+        const res = await axios.get(`https://posts-gallery-mdsalim.onrender.com/api/posts${cat}`)
         setPosts(res.data);
         res.data.length===0 ? setFlag(true) : setFlag(false);
       } catch(error){
@@ -67,7 +67,7 @@ export default function Home() {
         {posts.map((post) => (
           <div className="post" key={post.id}>
             <div className="img">
-              <img src={post.img && `http://localhost:8800/${post.img}`} alt="post img not found" />
+              <img src={post.img && `https://posts-gallery-mdsalim.onrender.com/${post.img}`} alt="post img not found" />
               {/* {console.log(post.img)} */}
             </div>
             <div className="content">

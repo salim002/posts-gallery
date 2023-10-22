@@ -25,7 +25,7 @@ const Register = () => {
     try{
       // const res = await axios.post("/auth/register", inputs);
       // console.log(res);
-      await axios.post("http://localhost:8800/api/auth/register", inputs);
+      await axios.post("https://posts-gallery-mdsalim.onrender.com/api/auth/register", inputs);
       navigate("/login");
     } catch(error){
       setErr(error.response.data);

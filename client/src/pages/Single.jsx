@@ -21,7 +21,7 @@ export default function Single() {
   useEffect(()=>{
     const fetchData = async ()=>{
       try{
-        const res = await axios.get(`http://localhost:8800/api/posts/${postId}`)
+        const res = await axios.get(`https://posts-gallery-mdsalim.onrender.com/api/posts/${postId}`)
         setPost(res.data);
       } catch(error){
         console.log(error);
@@ -32,7 +32,7 @@ export default function Single() {
 
   const handleDelete = async ()=>{
     try{
-      await axios.delete(`http://localhost:8800/api/posts/${postId}`, {
+      await axios.delete(`https://posts-gallery-mdsalim.onrender.com/api/posts/${postId}`, {
           headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -52,7 +52,7 @@ export default function Single() {
     <div className="single">
       <div className="content">
         {/* {console.log(post.img)} */}
-        <img src={post.img && `http://localhost:8800/${post.img}`} alt="img not found" />
+        <img src={post.img && `https://posts-gallery-mdsalim.onrender.com/${post.img}`} alt="img not found" />
         <div className="user">
           {/* {post.userImg && <img src={post.userImg} alt="img not found" />} */}
           <div className="info">

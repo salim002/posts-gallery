@@ -39,12 +39,12 @@ const Write = () => {
       formdata.append("date", moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"));
     }
     try{
-      state ? await axios.put(`http://localhost:8800/api/posts/${state.id}`, formdata, {
+      state ? await axios.put(`https://posts-gallery-mdsalim.onrender.com/api/posts/${state.id}`, formdata, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
         })
-       : await axios.post(`http://localhost:8800/api/posts/`, formdata, {
+       : await axios.post(`https://posts-gallery-mdsalim.onrender.com/api/posts/`, formdata, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
