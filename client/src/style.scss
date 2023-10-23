@@ -340,6 +340,35 @@ $lightGreen: #b9e7e7;
                 flex-direction: column;
                 gap: 20px;
 
+                .upload-and-post{
+                    display: flex;
+
+                    .file{
+                        padding: 10px;
+                        text-decoration: underline;
+                        cursor: pointer;
+                    }
+
+                    .buttons{
+                        width: 140px;
+                        margin-left: 30px;
+                    }
+
+                    button{
+                        padding: 5px 10px;
+                        width: 100%;
+                        cursor: pointer;
+                        color: white;
+                        background-color: teal;
+                        border: 1px solid teal;
+                        font-size: 20px;
+                        &:hover{
+                            color: teal;
+                            background-color: white;
+                        }
+                    }
+                }
+
                 .item{
                     border: 1px solid lightgray;
                     padding: 10px;
@@ -349,36 +378,12 @@ $lightGreen: #b9e7e7;
                     justify-content: space-between;
                     font-size: 12px;
                     color: #555;
+                    max-height: 200px;
 
                     h1{
                         font-size: 20px;
                     }
-
-                    .file{
-                        text-decoration: underline;
-                        cursor: pointer;
-                    }
-
-                    .buttons{
-                        display: flex;
-                        justify-content: space-between;
-
-                        :first-child{
-                            cursor: pointer;
-                            color: teal;
-                            background-color: white;
-                            border: 1px solid teal;
-                            padding: 3px 5px;
-                        }
-
-                        :last-child{
-                            cursor: pointer;
-                            color: white;
-                            background-color: teal;
-                            border: 1px solid teal;
-                            padding: 3px 5px;
-                        }
-                    }
+                    
                     .cat{
                         display: flex;
                         align-items: center;
