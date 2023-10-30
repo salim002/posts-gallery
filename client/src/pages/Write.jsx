@@ -30,28 +30,34 @@ const Write = () => {
 
   const handleClick = async (e)=>{
     e.preventDefault();
-    const formdata = new FormData();
-    formdata.append("title", title);
-    formdata.append("desc", value);
-    formdata.append("cat", cat);
-    formdata.append("file", file);
-    if(!state){
-      formdata.append("date", moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"));
+    if(!state && !file){
+      alert("Please select an image to upload with your post.");
     }
-    try{
-      state ? await axios.put(`https://posts-gallery-mdsalim.onrender.com/api/posts/${state.id}`, formdata, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        })
-       : await axios.post(`https://posts-gallery-mdsalim.onrender.com/api/posts/`, formdata, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        })
-      navigate("/");
-    } catch(error){
-      console.log(error);
+    else{
+      const formdata = new FormData();
+      formdata.append("title", title);
+      formdata.append("desc", value);
+      formdata.append("cat", cat);
+      formdata.append("file", file);
+      formdata.append("img", state?state.img:"");
+      if(!state){
+        formdata.append("date", moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"));
+      }
+      try{
+        state ? await axios.put(`https://posts-gallery-mdsalim.onrender.com/api/posts/${state.id}`, formdata, {
+              headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+          })
+        : await axios.post(`https://posts-gallery-mdsalim.onrender.com/api/posts/`, formdata, {
+              headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+          })
+        navigate("/");
+      } catch(error){
+        console.log(error);
+      }
     }
   }
 
